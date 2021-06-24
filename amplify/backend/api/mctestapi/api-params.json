@@ -1,0 +1,35 @@
+{
+  "paths": [
+    {
+      "name": "/mctest",
+      "lambdaFunction": "lambdamctest",
+      "privacy": {
+        "open": true
+      },
+      "policyResourceName": "/mctest"
+    }
+  ],
+  "resourceName": "mctestapi",
+  "apiName": "mctestapi",
+  "functionArns": [
+    {
+      "lambdaFunction": "lambdamctest"
+    }
+  ],
+  "privacy": {
+    "auth": 0,
+    "unauth": 0,
+    "authRoleName": "amplify-bkemctest-dev-184534-authRole",
+    "unAuthRoleName": "amplify-bkemctest-dev-184534-unauthRole"
+  },
+  "dependsOn": [
+    {
+      "category": "function",
+      "resourceName": "lambdamctest",
+      "attributes": [
+        "Name",
+        "Arn"
+      ]
+    }
+  ]
+}

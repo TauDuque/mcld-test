@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "storage": {
+      "patients": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

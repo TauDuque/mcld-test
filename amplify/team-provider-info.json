@@ -1,0 +1,22 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-bkemctest-dev-184534-authRole",
+      "UnauthRoleArn": "arn:aws:iam::548086862192:role/amplify-bkemctest-dev-184534-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::548086862192:role/amplify-bkemctest-dev-184534-authRole",
+      "Region": "sa-east-1",
+      "DeploymentBucketName": "amplify-bkemctest-dev-184534-deployment",
+      "UnauthRoleName": "amplify-bkemctest-dev-184534-unauthRole",
+      "StackName": "amplify-bkemctest-dev-184534",
+      "StackId": "arn:aws:cloudformation:sa-east-1:548086862192:stack/amplify-bkemctest-dev-184534/2c975fa0-d3a3-11eb-ad9a-0aa07419235a"
+    },
+    "categories": {
+      "function": {
+        "lambdamctest": {
+          "deploymentBucketName": "amplify-bkemctest-dev-184534-deployment",
+          "s3Key": "amplify-builds/lambdamctest-764955494a3346487961-build.zip"
+        }
+      }
+    }
+  }
+}

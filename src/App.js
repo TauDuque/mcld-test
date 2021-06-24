@@ -45,7 +45,6 @@ const App = () => {
       />
       {isClicked && <Menu />}
       <Box className={classes.main}>
-        <Form />
         <Consultas />
       </Box>
     </>

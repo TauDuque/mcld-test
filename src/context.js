@@ -7,7 +7,7 @@ import reducer from "./reducer";
 
 const initialState = {
   is_menu_open: false,
-  data: [],
+  dataDates: [],
 };
 
 const AppContext = React.createContext();
@@ -15,14 +15,11 @@ const AppContext = React.createContext();
 const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const [patients, setPatients] = useState([]);
-
   const apiData = async () => {
     try {
       const response = await API.get("mctestapi", "/mctest");
-      const dataDates = response.data;
+      const dataDates = response.data.Items;
       dispatch({ type: DATA_HANDLER, payload: dataDates });
-      console.log(patients);
     } catch (error) {
       console.log("errrrou");
     }

@@ -7,7 +7,8 @@ import Menu from "./Menu";
 import Consultas from "./Consultas";
 const useStyles = makeStyles((theme) => ({
   main: {
-    height: "570px",
+    minHeight: "570px",
+    height: "fit-content",
     marginTop: theme.spacing(),
     borderRadius: "18px",
     border: "solid #AFB1A9",
@@ -28,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 const App = () => {
   const classes = useStyles();
   const [isClicked, setIsClicked] = useState(false);
-  console.log(isClicked);
+
   const menuHandler = () => {
     if (!isClicked) {
       setIsClicked(true);

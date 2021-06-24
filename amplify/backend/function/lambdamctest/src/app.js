@@ -63,6 +63,8 @@ app.post("/mctest", function (req, res) {
       sintomas: req.body.symptom,
       retorno: req.body.isReturn,
       especialidade: req.body.docType,
+      diaConsulta: req.body.day,
+      horaConsulta: req.body.time,
     },
   };
   docClient.put(params, function (err, data) {

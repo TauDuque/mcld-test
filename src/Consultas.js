@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import { makeStyles } from "@material-ui/core/styles";
 import {
   Button,
   Box,
@@ -13,7 +15,14 @@ import {
 } from "@material-ui/core/";
 import { API } from "aws-amplify";
 
+const useStyles = makeStyles({
+  table: {
+    minWidth: 650,
+  },
+});
+
 const Consultas = () => {
+  const classes = useStyles();
   const [patients, setPatients] = useState([]);
 
   const apiData = async () => {
@@ -21,7 +30,6 @@ const Consultas = () => {
       const response = await API.get("mctestapi", "/mctest");
       const data = response.data.Items;
       setPatients(data);
-      console.log(patients.map((item) => item));
     } catch (error) {
       console.log("errrrou");
     }
@@ -33,26 +41,41 @@ const Consultas = () => {
     <div>
       <Box margin={1}></Box>
       <TableContainer>
-        <Table>
+        <Table className={classes.table}>
           <TableHead>
             <TableRow>
               <TableCell>Paciente:</TableCell>
               <TableCell align="right">Nascimento:</TableCell>
-              <TableCell align="right">Telefone:</TableCell>
-              <TableCell align="right">Identidade:</TableCell>
-              <TableCell align="right">E-mail:</TableCell>
               <TableCell align="right">Convênio:</TableCell>
-              <TableCell align="right">Retorno:</TableCell>
-              <TableCell align="right">Alergia:</TableCell>
-              <TableCell align="right">Sintomas:</TableCell>
               <TableCell align="right">Especialidade:</TableCell>
               <TableCell align="right">Dia da Consulta:</TableCell>
               <TableCell align="right">Horário da Consulta:</TableCell>
             </TableRow>
           </TableHead>
+          <TableBody>
+            {patients.map((item, index) => {
+              const {
+                nome,
+                idade,
+                convenio,
+                especialidade,
+                diaConsulta,
+                horaConsulta,
+              } = item;
+              return (
+                <TableRow component="th" scope="row" key={index}>
+                  <TableCell>{nome}</TableCell>
+                  <TableCell align="right">{idade}</TableCell>
+                  <TableCell align="right">{convenio}</TableCell>
+                  <TableCell align="right">{especialidade}</TableCell>
+                  <TableCell align="right">{diaConsulta}</TableCell>
+                  <TableCell align="right">{horaConsulta}</TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
         </Table>
       </TableContainer>
-      {patients.map((item) => {})}
     </div>
   );
 };

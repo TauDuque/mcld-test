@@ -14,7 +14,7 @@
       "function": {
         "lambdamctest": {
           "deploymentBucketName": "amplify-bkemctest-dev-184534-deployment",
-          "s3Key": "amplify-builds/lambdamctest-764955494a3346487961-build.zip"
+          "s3Key": "amplify-builds/lambdamctest-42483736316e55695843-build.zip"
         }
       }
     }

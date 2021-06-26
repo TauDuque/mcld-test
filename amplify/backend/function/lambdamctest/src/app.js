@@ -73,6 +73,29 @@ app.post("/mctest", function (req, res) {
   });
 });
 
+app.put("/mctest", function (req, res) {
+  console.log("body: ", req.body);
+  var params = {};
+  params.TableName = process.env.STORAGE_PATIENTS_NAME;
+  var Key = { id: "id" };
+  params.Key = Key;
+  docClient.update(params, function (err, data) {
+    if (err) res.json({ err });
+    else res.json({ success: "Contact updated successfully!" });
+  });
+});
+
+app.delete("/mctest", function (req, res) {
+  var params = {
+    TableName: process.env.STORAGE_PATIENTS_NAME,
+    Key: { id: "id" },
+  };
+  docClient.delete(params, function (err, data) {
+    if (err) res.json({ err });
+    else res.json({ success: "successfully deleted item" });
+  });
+});
+
 /* 
 app.delete('/mctest', function(req, res) {
   // Add your code here

@@ -13,6 +13,8 @@ body {
   text-transform: capitalize;
   background-color: #f6d464;
   color: grey;
+  list-style: none;
+  text-decoration: none;
 }
 
 *,
@@ -23,5 +25,13 @@ body {
 }
 
 .switch {
+  color: #000;
+}
+
+ul,
+li,
+a {
+  list-style: none;
+  text-decoration: none;
   color: #000;
 }

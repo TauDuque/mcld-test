@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 import {
   Card,
   CardContent,
@@ -8,6 +9,7 @@ import {
   ListItemText,
   Divider,
 } from "@material-ui/core";
+import { useGLobalContext } from "./context";
 
 const useStyles = makeStyles((theme) => ({
   MuiCardContent: {
@@ -24,21 +26,31 @@ const useStyles = makeStyles((theme) => ({
     cursor: "pointer",
     padding: theme.spacing(2),
   },
+  MuiListItem: {
+    listStyle: "none",
+    textDecoration: "none",
+  },
 }));
 
 const Menu = () => {
+  const { closeMenu } = useGLobalContext();
+
   const classes = useStyles();
   return (
     <Card className={classes.MuiCardContent}>
       <CardContent>
-        <List>
-          <ListItem>
-            <ListItemText primary="Agendar Consulta" />
-          </ListItem>
+        <List className={classes.MuiListItem}>
+          <Link to="/" onClick={closeMenu}>
+            <ListItem>
+              <ListItemText primary="Agendar Consulta" />
+            </ListItem>
+          </Link>
           <Divider />
-          <ListItem>
-            <ListItemText primary="Consultas da Semana" />
-          </ListItem>
+          <Link to="/consultas" onClick={closeMenu}>
+            <ListItem>
+              <ListItemText primary="Consultas Agendadas" />
+            </ListItem>
+          </Link>
         </List>
       </CardContent>
     </Card>

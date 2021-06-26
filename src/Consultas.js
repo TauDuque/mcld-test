@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 import {
-  Button,
   Box,
-  FormControlLabel,
-  FormGroup,
   Table,
   TableBody,
   TableCell,
@@ -13,6 +10,7 @@ import {
   TableHead,
   TableRow,
 } from "@material-ui/core/";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { API } from "aws-amplify";
 
 const useStyles = makeStyles({
@@ -44,7 +42,8 @@ const Consultas = () => {
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
-              <TableCell>Paciente:</TableCell>
+              <TableCell align="center">Acessar</TableCell>
+              <TableCell align="center">Paciente:</TableCell>
               <TableCell align="right">Nascimento:</TableCell>
               <TableCell align="right">Convênio:</TableCell>
               <TableCell align="right">Especialidade:</TableCell>
@@ -61,15 +60,22 @@ const Consultas = () => {
                 especialidade,
                 diaConsulta,
                 horaConsulta,
+                id,
               } = item;
               return (
                 <TableRow component="th" scope="row" key={index}>
-                  <TableCell>{nome}</TableCell>
+                  <Link to={`/consultas/${id}`}>
+                    <TableCell align="center">
+                      <AccountCircleIcon />
+                    </TableCell>
+                  </Link>
+                  <TableCell align="center">{nome}</TableCell>
+
                   <TableCell align="right">{idade}</TableCell>
                   <TableCell align="right">{convenio}</TableCell>
                   <TableCell align="right">{especialidade}</TableCell>
                   <TableCell align="right">{diaConsulta}</TableCell>
-                  <TableCell align="right">{horaConsulta}</TableCell>
+                  <TableCell align="center">{horaConsulta}</TableCell>
                 </TableRow>
               );
             })}

@@ -23,7 +23,7 @@ const useStyles = makeStyles({
 
 const Consultas = () => {
   const classes = useStyles();
-  const { is_loading, loadStart, loadStop } = useGlobalContext();
+  const { is_loading, loadStop } = useGlobalContext();
   const [patients, setPatients] = useState([]);
 
   const apiData = async () => {

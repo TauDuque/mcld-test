@@ -77,6 +77,7 @@ const useStyles = makeStyles((theme) => ({
 const Consulta = () => {
   const [patients, setPatients] = useState([]);
   const { id } = useParams();
+  // eslint-disable-next-line
   const [color, setColor] = useState(null);
   const { is_loading, loadStop } = useGlobalContext();
   const classes = useStyles();

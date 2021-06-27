@@ -7,7 +7,6 @@ import Form from "./Form";
 import Menu from "./Menu";
 import Consulta from "./Consulta";
 import Consultas from "./Consultas";
-import Loading from "./Loading";
 import Home from "./Home";
 import { useGlobalContext } from "./context";
 

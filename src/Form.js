@@ -76,10 +76,10 @@ const useStyles = makeStyles((theme) => ({
 const Form = () => {
   const classes = useStyles();
   const history = useHistory();
-  const { is_loading, loadStop, loadStart } = useGlobalContext();
+  const { is_loading, loadStop } = useGlobalContext();
   const [color, setColor] = useState(null);
   const [name, setName] = useState("");
-  const [age, setAge] = useState(new Date());
+  const [age, setAge] = useState("");
   const [phone, setPhone] = useState("");
   const [idNumber, setIdNumber] = useState("");
   const [email, setEmail] = useState("");
@@ -88,7 +88,7 @@ const Form = () => {
   const [symptom, setSymptom] = useState("");
   const [isReturn, setIsReturn] = useState(false);
   const [docType, setDocType] = useState("");
-  const [day, setDay] = useState(new Date());
+  const [day, setDay] = useState("");
   const [time, setTime] = useState();
   const [isSent, setIsSent] = useState(false);
 
@@ -138,6 +138,7 @@ const Form = () => {
         time: time,
       },
     };
+    // eslint-disable-next-line
     const apiData = API.post("mctestapi", "/mctest", data);
   }
 
@@ -147,6 +148,7 @@ const Form = () => {
         return history.push("/");
       }, 3400);
     }
+    // eslint-disable-next-line
   }, [isSent]);
 
   useEffect(() => {

@@ -44,13 +44,13 @@ const Home = () => {
   const { is_form_submited, toSubmit, is_loading, loadStop, loadStart } =
     useGlobalContext();
 
-  /*  useEffect(() => {
+  useEffect(() => {
     if (is_loading) {
       setTimeout(() => {
         loadStop();
       }, 2600);
-    }
-  }, []); */
+    } // eslint-disable-next-line
+  }, []);
 
   if (is_form_submited) {
     return (

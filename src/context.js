@@ -1,4 +1,4 @@
-import React, { useContext, useReducer, useEffect, useState } from "react";
+import React, { useContext, useReducer, useEffect } from "react";
 
 import {
   OPEN_MENU,
@@ -22,15 +22,12 @@ const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [menuMount, setMenuMount] = useState(false);
 
   const openMenu = () => {
     dispatch({ type: OPEN_MENU });
-    setMenuMount(true);
   };
   const closeMenu = () => {
     dispatch({ type: CLOSE_MENU });
-    setMenuMount(false);
   };
 
   const loadStart = () => {
@@ -50,7 +47,7 @@ const AppProvider = ({ children }) => {
 
   useEffect(() => {
     loadStart();
-  }, [menuMount]);
+  }, []);
 
   return (
     <AppContext.Provider

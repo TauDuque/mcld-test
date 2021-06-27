@@ -3,7 +3,6 @@ import {
   CLOSE_MENU,
   FORM_NOT_SUBMITED,
   FORM_SUBMITED,
-  START_LOADING,
   STOP_LOADING,
 } from "./actions";
 
@@ -19,9 +18,6 @@ const reducer = (state, action) => {
   }
   if (action.type === FORM_SUBMITED) {
     return { ...state, is_form_submited: true };
-  }
-  if (action.type === START_LOADING) {
-    return { ...state, is_loading: true };
   }
   if (action.type === STOP_LOADING) {
     return { ...state, is_loading: false };

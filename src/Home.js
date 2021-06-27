@@ -90,7 +90,6 @@ const Home = () => {
   }
 
   if (!is_form_submited) {
-    loadStart();
     return (
       <div>
         {is_loading && <Loading />}

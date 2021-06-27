@@ -5,7 +5,6 @@ import {
   CLOSE_MENU,
   FORM_NOT_SUBMITED,
   FORM_SUBMITED,
-  START_LOADING,
   STOP_LOADING,
 } from "./actions";
 
@@ -30,10 +29,6 @@ const AppProvider = ({ children }) => {
     dispatch({ type: CLOSE_MENU });
   };
 
-  const loadStart = () => {
-    dispatch({ type: START_LOADING });
-  };
-
   const loadStop = () => {
     dispatch({ type: STOP_LOADING });
   };
@@ -45,10 +40,6 @@ const AppProvider = ({ children }) => {
     dispatch({ type: FORM_SUBMITED });
   };
 
-  useEffect(() => {
-    loadStart();
-  }, []);
-
   return (
     <AppContext.Provider
       value={{
@@ -57,7 +48,6 @@ const AppProvider = ({ children }) => {
         closeMenu,
         toSubmit,
         justSubmited,
-        loadStart,
         loadStop,
       }}
     >

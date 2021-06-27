@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Loading from "./Loading";
+import { useHistory } from "react-router-dom";
 import { makeStyles, FormControl } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import {
@@ -16,6 +18,8 @@ import { API } from "aws-amplify";
 import clsx from "clsx";
 
 import { Especialidades } from "./data";
+import { useEffect } from "react";
+import { useGlobalContext } from "./context";
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -70,8 +74,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Form = () => {
-  const [color, setColor] = useState(null);
   const classes = useStyles();
+  const history = useHistory();
+  const { is_loading, loadStop, loadStart } = useGlobalContext();
+  const [color, setColor] = useState(null);
   const [name, setName] = useState("");
   const [age, setAge] = useState(new Date());
   const [phone, setPhone] = useState("");
@@ -84,6 +90,7 @@ const Form = () => {
   const [docType, setDocType] = useState("");
   const [day, setDay] = useState(new Date());
   const [time, setTime] = useState();
+  const [isSent, setIsSent] = useState(false);
 
   const toggleChecked = () => {
     setIsReturn((prev) => !prev);
@@ -113,7 +120,8 @@ const Form = () => {
     );
   }
 
-  async function handleSubmit(e) {
+  function handleSubmit(e) {
+    setIsSent(true);
     const data = {
       body: {
         name: name,
@@ -130,15 +138,28 @@ const Form = () => {
         time: time,
       },
     };
-
-    console.log(data);
-    const apiData = await API.post("mctestapi", "/mctest", data);
-    console.log(data);
-    console.log({ apiData });
+    const apiData = API.post("mctestapi", "/mctest", data);
   }
 
+  useEffect(() => {
+    if (isSent) {
+      setTimeout(() => {
+        return history.push("/");
+      }, 3400);
+    }
+  }, [isSent]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      loadStop();
+    }, 2700);
+  });
+
+  if (is_loading) {
+    return <Loading />;
+  }
   return (
-    <form className={classes.form} onSubmit={handleSubmit}>
+    <form className={classes.form}>
       <Box margin={1} marginTop={0}>
         <TextField
           required
@@ -303,7 +324,12 @@ const Form = () => {
         </FormControl>
       </Box>
       <Box marginTop={2}>
-        <Button type="submit" variant="contained" className={classes.btn}>
+        <Button
+          type="button"
+          variant="contained"
+          className={classes.btn}
+          onClick={() => handleSubmit()}
+        >
           Agendar
         </Button>
       </Box>

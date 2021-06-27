@@ -1,19 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Box } from "@material-ui/core/";
 import AddCircleSharpIcon from "@material-ui/icons/AddCircleSharp";
 import Form from "./Form";
 import Menu from "./Menu";
 import Consulta from "./Consulta";
 import Consultas from "./Consultas";
-import { useGLobalContext } from "./context";
+import Loading from "./Loading";
+import Home from "./Home";
+import { useGlobalContext } from "./context";
 
 const useStyles = makeStyles((theme) => ({
   main: {
     minHeight: "570px",
+    minWidth: "550px",
     height: "fit-content",
-    marginTop: theme.spacing(),
+    marginTop: theme.spacing(5),
     borderRadius: "18px",
     border: "solid #AFB1A9",
     backgroundColor: "#EFE7CC",
@@ -31,9 +34,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const App = () => {
-  const { is_menu_open, closeMenu, openMenu } = useGLobalContext();
+  const { is_menu_open, closeMenu, openMenu } = useGlobalContext();
   const classes = useStyles();
-  const [isClicked, setIsClicked] = useState(false);
 
   const menuHandler = () => {
     if (!is_menu_open) {
@@ -54,6 +56,9 @@ const App = () => {
         <Box className={classes.main}>
           <Switch>
             <Route exact path="/">
+              <Home />
+            </Route>
+            <Route exact path="/form">
               <Form />
             </Route>
             <Route exact path="/consultas">

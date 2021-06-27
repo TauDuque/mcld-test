@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
+import Loading from "./Loading";
 import { makeStyles, FormControl } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
-import { useParams, Redirect, Route } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import {
   Button,
   Box,
@@ -11,12 +12,11 @@ import {
   FormControlLabel,
   FormGroup,
   Switch,
+  Typography,
 } from "@material-ui/core/";
-import Autocomplete from "@material-ui/lab/Autocomplete";
 import { API } from "aws-amplify";
 import clsx from "clsx";
-
-import { Especialidades } from "./data";
+import { useGlobalContext } from "./context";
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -68,39 +68,18 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#FFE070",
     color: "#000",
   },
+  typography: {
+    variant: "h5",
+    color: "#000",
+  },
 }));
 
 const Consulta = () => {
   const [patients, setPatients] = useState([]);
-  const [isSubmit, setIsSubmit] = useState(false);
   const { id } = useParams();
   const [color, setColor] = useState(null);
+  const { is_loading, loadStop } = useGlobalContext();
   const classes = useStyles();
-  const [name, setName] = useState("");
-  const [age, setAge] = useState(new Date());
-  const [phone, setPhone] = useState("");
-  const [idNumber, setIdNumber] = useState("");
-  const [email, setEmail] = useState("");
-  const [isConvd, setIsConvd] = useState("");
-  const [allergy, setAllergy] = useState("");
-  const [symptom, setSymptom] = useState("");
-  const [isReturn, setIsReturn] = useState();
-  const [docType, setDocType] = useState("");
-  const [day, setDay] = useState(new Date());
-  const [time, setTime] = useState();
-
-  const toggleChecked = () => {
-    setIsReturn((prev) => !prev);
-    if (!isReturn) {
-      setColor("switch");
-    } else {
-      setColor(null);
-    }
-  };
-
-  const handleRadio = (e) => {
-    setIsConvd(e.target.value);
-  };
 
   function StyledRadio(props) {
     return (
@@ -130,29 +109,14 @@ const Consulta = () => {
     apiData();
   }, []);
 
-  async function putData(e) {
-    e.preventDefault();
-    const data = {
-      body: {
-        name: name,
-        age: age,
-        phone: phone,
-        idNumber: idNumber,
-        email: email,
-        isConvd: isConvd,
-        allergy: allergy,
-        symptom: symptom,
-        isReturn: isReturn,
-        docType: docType,
-        day: day,
-        time: time,
-      },
-    };
+  useEffect(() => {
+    setTimeout(() => {
+      loadStop();
+    }, 2700);
+  });
 
-    console.log(data);
-    const apiData = await API.put("mctestapi", "/mctest", data);
-    console.log(data);
-    console.log({ apiData });
+  if (is_loading) {
+    return <Loading />;
   }
 
   return (
@@ -160,15 +124,22 @@ const Consulta = () => {
       {patients.map((item, index) => {
         if (id === item.id) {
           return (
-            <form className={classes.form} onSubmit={putData}>
-              <Box margin={1} marginTop={1}>
-                <TextField
-                  key={index}
-                  required
-                  className={classes.textField}
-                  defaultValue={item.nome}
-                  onChange={(e) => setName(e.target.value)}
-                />
+            <form className={classes.form}>
+              <Box
+                margin={1}
+                marginTop={1}
+                display="flex"
+                alignItems="center"
+                marginRight="70px"
+              >
+                <Box p={1}>
+                  <Typography align="center" variant="caption">
+                    paciente:{" "}
+                  </Typography>
+                </Box>
+                <Typography className={classes.typography} variante="h6">
+                  {item.nome}
+                </Typography>
               </Box>
               <Box display="flex">
                 <FormControl>
@@ -182,8 +153,7 @@ const Consulta = () => {
                       InputLabelProps={{
                         shrink: true,
                       }}
-                      defaultValue={item.idade}
-                      onChange={(e) => setAge(e.target.value)}
+                      value={item.idade}
                     />
                   </Box>
                 </FormControl>
@@ -194,8 +164,7 @@ const Consulta = () => {
                     label="Contato"
                     className={classes.planeField}
                     type="tel"
-                    defaultValue={item.telefone}
-                    onChange={(e) => setPhone(e.target.value)}
+                    value={item.telefone}
                   />
                 </Box>
               </Box>
@@ -205,8 +174,7 @@ const Consulta = () => {
                   className={classes.planeField}
                   label="identidade"
                   type="text"
-                  defaultValue={item.identidade}
-                  onChange={(e) => setIdNumber(e.target.value)}
+                  value={item.identidade}
                 />
                 <Box marginLeft={3}>
                   <TextField
@@ -214,8 +182,7 @@ const Consulta = () => {
                     className={classes.planeField}
                     type="email"
                     key={index}
-                    defaultValue={item.email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={item.email}
                   />
                 </Box>
               </Box>
@@ -228,7 +195,6 @@ const Consulta = () => {
                     row
                     key={index}
                     value={item.convenio}
-                    onChange={() => handleRadio()}
                   >
                     <FormControlLabel
                       className={item.convenio === "convenio" ? "switch" : null}
@@ -259,7 +225,6 @@ const Consulta = () => {
                         style={{ color: "#B39E54" }}
                         checked={item.retorno ? true : false}
                         defaultValue={item.retorno}
-                        onClick={toggleChecked}
                       />
                     }
                     label="Consulta de Retorno"
@@ -272,8 +237,7 @@ const Consulta = () => {
                   key={index}
                   className={classes.textField}
                   type="text"
-                  defaultValue={item.alergia}
-                  onChange={(e) => setAllergy(e.target.value)}
+                  value={item.alergia}
                 />
               </Box>
               <Box margin={2}>
@@ -282,26 +246,16 @@ const Consulta = () => {
                   label="Sintomas"
                   className={classes.textField}
                   type="text"
-                  defaultValue={item.sintomas}
-                  onChange={(e) => setSymptom(e.target.value)}
+                  value={item.sintomas}
                 />
               </Box>
               <Box margin={1}>
-                <Autocomplete
-                  freeSolo
-                  onChange={(handleDocs, value) => setDocType(value)}
-                  options={Especialidades}
-                  getOptionLabel={(option) => option}
-                  style={{ width: 300 }}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      key={index}
-                      variant="outlined"
-                      label={item.especialidade}
-                      required
-                    />
-                  )}
+                <TextField
+                  value={item.especialidade}
+                  key={index}
+                  variant="outlined"
+                  label="especialidade"
+                  required
                 />
               </Box>
               <Box margin={1} display="flex">
@@ -319,8 +273,7 @@ const Consulta = () => {
                         InputLabelProps={{
                           shrink: true,
                         }}
-                        defaultValue={item.diaConsulta}
-                        onChange={(e) => setDay(e.target.value)}
+                        value={item.diaConsulta}
                       />
                     </Box>
                     <Box marginLeft={1.5}>
@@ -328,28 +281,27 @@ const Consulta = () => {
                         required
                         key={index}
                         className={classes.planeField}
-                        defaultValue="07:30"
                         type="time"
                         label="Hora"
                         InputLabelProps={{
                           shrink: true,
                         }}
-                        defaultValue={item.horaConsulta}
-                        onChange={(e) => setTime(e.target.value)}
+                        value={item.horaConsulta}
                       />
                     </Box>
                   </Box>
                 </FormControl>
               </Box>
-              <Box marginTop={2}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  className={classes.btn}
-                  onClick={() => setIsSubmit(true)}
-                >
-                  Agendar
-                </Button>
+              <Box marginTop={1}>
+                <Link to="/consultas">
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    className={classes.btn}
+                  >
+                    Voltar
+                  </Button>
+                </Link>
               </Box>
             </form>
           );

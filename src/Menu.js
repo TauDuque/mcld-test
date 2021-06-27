@@ -9,7 +9,7 @@ import {
   ListItemText,
   Divider,
 } from "@material-ui/core";
-import { useGLobalContext } from "./context";
+import { useGlobalContext } from "./context";
 
 const useStyles = makeStyles((theme) => ({
   MuiCardContent: {
@@ -33,14 +33,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Menu = () => {
-  const { closeMenu } = useGLobalContext();
+  const { closeMenu } = useGlobalContext();
 
   const classes = useStyles();
   return (
     <Card className={classes.MuiCardContent}>
       <CardContent>
         <List className={classes.MuiListItem}>
-          <Link to="/" onClick={closeMenu}>
+          <Link to="/form" onClick={closeMenu}>
             <ListItem>
               <ListItemText primary="Agendar Consulta" />
             </ListItem>

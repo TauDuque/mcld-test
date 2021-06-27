@@ -75,10 +75,16 @@ app.post("/mctest", function (req, res) {
 
 app.put("/mctest", function (req, res) {
   console.log("body: ", req.body);
-  var params = {};
-  params.TableName = process.env.STORAGE_PATIENTS_NAME;
-  var Key = { id: "id" };
-  params.Key = Key;
+  var params = {
+    TableName: process.env.STORAGE_PATIENTS_NAME,
+    Key: { id: "id" },
+    UpdateExpression: "SET nome = :nome",
+    ExpressionAttributeValues: {
+      ":nome": "nome",
+    },
+    ReturnValues: "UPDATED_NEW",
+  };
+
   docClient.update(params, function (err, data) {
     if (err) res.json({ err });
     else res.json({ success: "Contact updated successfully!" });

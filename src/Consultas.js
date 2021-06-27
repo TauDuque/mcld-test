@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import Loading from "./Loading";
+import { useGlobalContext } from "./context";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import {
@@ -21,6 +23,7 @@ const useStyles = makeStyles({
 
 const Consultas = () => {
   const classes = useStyles();
+  const { is_loading, loadStart, loadStop } = useGlobalContext();
   const [patients, setPatients] = useState([]);
 
   const apiData = async () => {
@@ -34,7 +37,17 @@ const Consultas = () => {
   };
   useEffect(() => {
     apiData(API);
-  }, []);
+  }, [patients]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      loadStop();
+    }, 2700);
+  });
+
+  if (is_loading) {
+    return <Loading />;
+  }
   return (
     <div>
       <Box margin={1}></Box>
@@ -63,14 +76,13 @@ const Consultas = () => {
                 id,
               } = item;
               return (
-                <TableRow component="th" scope="row" key={index}>
-                  <Link to={`/consultas/${id}`}>
-                    <TableCell align="center">
+                <TableRow scope="row" key={index}>
+                  <TableCell align="center">
+                    <Link to={`/consultas/${id}`}>
                       <AccountCircleIcon />
-                    </TableCell>
-                  </Link>
+                    </Link>
+                  </TableCell>
                   <TableCell align="center">{nome}</TableCell>
-
                   <TableCell align="right">{idade}</TableCell>
                   <TableCell align="right">{convenio}</TableCell>
                   <TableCell align="right">{especialidade}</TableCell>

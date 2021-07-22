@@ -78,23 +78,34 @@ app.put("/mctest", function (req, res) {
   var params = {
     TableName: process.env.STORAGE_PATIENTS_NAME,
     Key: { id: "id" },
-    UpdateExpression: "SET nome = :nome",
-    ExpressionAttributeValues: {
-      ":nome": "nome",
+    Item: {
+      id: req.body.id,
+      nome: req.body.name,
+      idade: req.body.age,
+      telefone: req.body.phone,
+      identidade: req.body.idNumber,
+      email: req.body.patientEmail,
+      convenio: req.body.isConvd,
+      alergia: req.body.allergy,
+      sintomas: req.body.symptom,
+      retorno: req.body.isReturn,
+      especialidade: req.body.docType,
+      diaConsulta: req.body.day,
+      horaConsulta: req.body.time,
     },
-    ReturnValues: "UPDATED_NEW",
   };
-
-  docClient.update(params, function (err, data) {
+  docClient.put(params, function (err, data) {
     if (err) res.json({ err });
     else res.json({ success: "Contact updated successfully!" });
   });
 });
 
-app.delete("/mctest", function (req, res) {
+app.delete("/mctest/:id", function (req, res) {
   var params = {
     TableName: process.env.STORAGE_PATIENTS_NAME,
-    Key: { id: "id" },
+    Key: {
+      id: req.params.id,
+    },
   };
   docClient.delete(params, function (err, data) {
     if (err) res.json({ err });

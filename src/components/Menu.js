@@ -9,7 +9,7 @@ import {
   ListItemText,
   Divider,
 } from "@material-ui/core";
-import { useGlobalContext } from "./context";
+import { useGlobalContext } from "../context";
 
 const useStyles = makeStyles((theme) => ({
   MuiCardContent: {

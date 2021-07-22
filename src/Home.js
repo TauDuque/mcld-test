@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Typography, Box, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
 import { useGlobalContext } from "./context";
-import Loading from "./Loading";
+import Loading from "./components/Loading";
 
 const useStyles = makeStyles((theme) => ({
   textBox: {
@@ -36,13 +36,23 @@ const useStyles = makeStyles((theme) => ({
     color: "#FFF300",
     minWidth: "145px",
     boxShadow: "1px 1px 8px 4px rgba(0, 0, 0, 0.26)",
+    "&:hover": {
+      backgroundColor: "#FFF300",
+      color: "#404040",
+    },
   },
 }));
 
 const Home = () => {
   const classes = useStyles();
-  const { is_form_submited, toSubmit, is_loading, loadStop, loadStart } =
-    useGlobalContext();
+  const {
+    is_form_submited,
+    toSubmit,
+    is_loading,
+    loadStop,
+    loadStart,
+    apiGetData,
+  } = useGlobalContext();
 
   useEffect(() => {
     if (is_loading) {
@@ -51,6 +61,12 @@ const Home = () => {
       }, 2600);
     } // eslint-disable-next-line
   }, []);
+
+  const handleSubmit = () => {
+    toSubmit();
+    loadStart();
+    apiGetData();
+  };
 
   if (is_form_submited) {
     return (
@@ -67,7 +83,7 @@ const Home = () => {
               type="button"
               variant="contained"
               className={classes.btn}
-              onClick={toSubmit}
+              onClick={() => handleSubmit()}
             >
               agendar
             </Button>
@@ -78,7 +94,7 @@ const Home = () => {
                 type="button"
                 variant="contained"
                 className={classes.btnTwo}
-                onClick={toSubmit}
+                onClick={() => handleSubmit()}
               >
                 ver consultas
               </Button>

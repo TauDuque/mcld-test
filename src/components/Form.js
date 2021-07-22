@@ -17,9 +17,9 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import { API } from "aws-amplify";
 import clsx from "clsx";
 
-import { Especialidades } from "./data";
+import { Especialidades } from "../utils/data";
 import { useEffect } from "react";
-import { useGlobalContext } from "./context";
+import { useGlobalContext } from "../context";
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -76,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
 const Form = () => {
   const classes = useStyles();
   const history = useHistory();
-  const { is_loading, loadStop } = useGlobalContext();
+  const { is_loading, loadStop, loadStart } = useGlobalContext();
   const [color, setColor] = useState(null);
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
@@ -120,8 +120,8 @@ const Form = () => {
     );
   }
 
-  function handleSubmit(e) {
-    setIsSent(true);
+  function handleSubmit() {
+    loadStart();
     const data = {
       body: {
         name: name,
@@ -140,16 +140,8 @@ const Form = () => {
     };
     // eslint-disable-next-line
     const apiData = API.post("mctestapi", "/mctest", data);
+    return history.push("/");
   }
-
-  useEffect(() => {
-    if (isSent) {
-      setTimeout(() => {
-        return history.push("/");
-      }, 3400);
-    }
-    // eslint-disable-next-line
-  }, [isSent]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -161,7 +153,7 @@ const Form = () => {
     return <Loading />;
   }
   return (
-    <form className={classes.form}>
+    <form className={classes.form} onSubmit={handleSubmit}>
       <Box margin={1} marginTop={0}>
         <TextField
           required
@@ -326,12 +318,7 @@ const Form = () => {
         </FormControl>
       </Box>
       <Box marginTop={2}>
-        <Button
-          type="button"
-          variant="contained"
-          className={classes.btn}
-          onClick={() => handleSubmit()}
-        >
+        <Button type="submit" variant="contained" className={classes.btn}>
           Agendar
         </Button>
       </Box>

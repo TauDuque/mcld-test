@@ -3,12 +3,9 @@ import { makeStyles } from "@material-ui/core";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Box } from "@material-ui/core/";
 import AddCircleSharpIcon from "@material-ui/icons/AddCircleSharp";
-import Form from "./Form";
-import Menu from "./Menu";
-import Consulta from "./Consulta";
-import Consultas from "./Consultas";
-import Home from "./Home";
 import { useGlobalContext } from "./context";
+import Home from "./Home";
+import { Consultas, Consulta, Menu, Form } from "./components";
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -16,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
     minWidth: "550px",
     height: "fit-content",
     marginTop: theme.spacing(5),
+    marginBottom: theme.spacing(6),
     borderRadius: "18px",
     border: "solid #AFB1A9",
     backgroundColor: "#EFE7CC",

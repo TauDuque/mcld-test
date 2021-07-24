@@ -16,7 +16,8 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(6),
     borderRadius: "18px",
     border: "solid #AFB1A9",
-    backgroundColor: "#EFE7CC",
+    background:
+      "linear-gradient(230deg, rgba(255,211,115,1) 0%, rgba(246,219,133,1) 50%, rgba(255,246,200,1) 100%)",
     boxShadow: "2px 1px 75px 1px rgba(0, 0, 0, 0.54)",
   },
   MuiSvgIcon: {
@@ -27,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 10,
     display: "inline",
     cursor: "pointer",
+    color: "#ffffff",
   },
 }));
 

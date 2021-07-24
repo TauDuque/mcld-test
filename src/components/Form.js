@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: theme.spacing(0),
+    paddingTop: theme.spacing(0.2),
     padding: theme.spacing(0.5),
   },
   textField: {
